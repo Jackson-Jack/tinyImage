@@ -1,8 +1,11 @@
 #!/bin/sh   
-    
-# How to use
-# 将该脚本和pngquant脚本放在工程的根目录下
-# cd到工程的根目录下，执行 ./tinyImage 即可
+# author: DQB
+# How to use ?
+# 1.将该脚本和pngquant脚本放在工程的根目录下
+# 2.cd到工程的根目录下，执行 ./tinyImage 即可
+
+# todo:
+# 1.去除当文件夹无png文件时的error【该error不影响正常使用】
 
 function scandir() {   
     local cur_dir workdir   
