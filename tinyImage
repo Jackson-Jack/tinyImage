@@ -1,0 +1,52 @@
+#!/bin/sh   
+    
+# How to use
+# 将该脚本和pngquant脚本放在工程的根目录下
+# cd到工程的根目录下，执行 ./tinyImage 即可
+
+function scandir() {   
+    local cur_dir workdir   
+    workdir=$1   
+    cd ${workdir}  
+
+    if [ ${workdir} = "/" ]   
+    then   
+        cur_dir=""   
+    else   
+        cur_dir=$(pwd) 
+        # 遍历输出目录路径名
+        echo ${cur_dir}
+        # 压缩图片，并且替换源文件
+        $path/pngquant --ext .png --force  -- ${cur_dir}/*.png
+    fi   
+  
+   # 递归
+   for dirlist in $(ls ${cur_dir})   
+   do   
+        if test -d ${dirlist}
+        then   
+           cd ${dirlist}   
+           scandir ${cur_dir}/${dirlist}   
+           cd ..   
+       fi   
+   done   
+}  
+
+# echo "Please input image directory absolute path:"
+# read path
+# echo "image directory absolute path: $path"
+path=`pwd`
+echo "start compress images, please waiting for a while..."
+
+if test -d $path  
+then   
+   scandir $path 
+   echo "compress all images complete!!!"  
+elif test -f $path   
+    then   
+        echo "you input a file but not a directory,please reinput and try again"   
+           exit 1   
+    else   
+           echo "the Directory isn't exist which you input,please input a new one!"   
+           exit 1   
+fi  
