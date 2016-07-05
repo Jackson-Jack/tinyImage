@@ -4,10 +4,17 @@
 # 1.将该脚本和pngquant脚本放在工程的根目录下
 # 2.cd到工程的根目录下，执行 ./tinyImage 即可
 
+echo "Origin image total size:(unit:Byte)"
+# 计算所有图片文件的大小（单位：字节）
+ls -ll `find . -name "*.png"` | awk '{print $5}' | awk '{a+=$0}END{print a}'
+
 echo "Starting compress images, please wait a minite..."
 for var in `find . -name "*.png"`
 do
-  # 压缩图片，并且替换源文件
-  ./pngquant --ext .png --force  -- $var
+	# 压缩图片，并且替换源文件
+	./pngquant --ext .png --force  -- $var
 done
-echo "Task Complete!"
+echo "Compress task complete!"
+
+echo "Compressed image total size:(unit:Byte)"
+ls -ll `find . -name "*.png"` | awk '{print $5}' | awk '{a+=$0}END{print a}'
